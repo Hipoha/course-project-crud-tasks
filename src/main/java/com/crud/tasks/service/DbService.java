@@ -16,7 +16,20 @@ public class DbService {
         return repository.findAll();
     }
 
-    public Task getTask(long id) {
+    public Task getTaskById(final long id) {
         return repository.findById(id);
+    }
+
+    public void deleteTaskById(final long id) {
+        try {
+            repository.deleteById(id);
+        } catch(Exception e) {
+            // do nothing
+        }
+
+    }
+
+    public Task saveTask(final Task task) {
+        return repository.save(task);
     }
 }
