@@ -106,4 +106,25 @@ public class TrelloClientTest {
 
     }
 
+    @Test
+    public void shouldReturnEmptyList() {
+        // Given
+        URI url = UriComponentsBuilder.fromHttpUrl(
+                trelloConfig.getTrelloApiEndpoint() + "/members/" + trelloConfig.getTrelloAppUsername() + "/boards")
+                .queryParam("key", trelloConfig.getTrelloAppKey())
+                .queryParam("token", trelloConfig.getTrelloToken())
+                .queryParam("fields", "name,id")
+                .queryParam("lists", "all")
+                .build().encode().toUri();
+
+        when(restTemplate.getForObject(url, TrelloBoardDto[].class)).thenReturn(null);
+
+        // When
+        List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
+
+        // Then
+        assertEquals(0, fetchedTrelloBoards.size());
+
+    }
+
 }
