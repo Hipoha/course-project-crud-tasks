@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Mail {
     private String mailTo;
+    private String ccTo;
     private String subject;
     private String message;
 }
