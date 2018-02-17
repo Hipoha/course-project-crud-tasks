@@ -27,11 +27,12 @@ public class EmailScheduler {
     @Scheduled(fixedDelayString = "10000")
     public void sendInformationEmail() {
         long size = taskRepository.count();
+        String pluralityCase = (size == 1) ? "task" : "tasks";
         simpleEmailService.send(new Mail(
                 adminConfig.getAdminMail(),
                 "",
                 SUBJECT,
-                "You have " + size + " tasks in your database"));
+                "You have " + size + " " + pluralityCase + " in your database"));
     }
 
 }
