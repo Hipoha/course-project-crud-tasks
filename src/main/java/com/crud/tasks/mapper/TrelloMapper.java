@@ -1,9 +1,6 @@
 package com.crud.tasks.mapper;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 
 import java.util.List;
 
@@ -42,5 +39,15 @@ public class TrelloMapper {
                         trelloList.getName(),
                         trelloList.isClosed()))
                 .collect(toList());
+    }
+
+    public TrelloCardDto mapToCardDto(final TrelloCard trelloCard) {
+        return new TrelloCardDto(trelloCard.getName(), trelloCard.getDescription(),
+                trelloCard.getPos(), trelloCard.getListId());
+    }
+
+    public TrelloCard mapToCard(final TrelloCardDto trelloCardDto) {
+        return new TrelloCard(trelloCardDto.getName(), trelloCardDto.getDescription(),
+                trelloCardDto.getPos(), trelloCardDto.getListId());
     }
 }
