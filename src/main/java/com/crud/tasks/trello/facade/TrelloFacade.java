@@ -1,7 +1,6 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import org.slf4j.Logger;
@@ -28,6 +27,18 @@ public class TrelloFacade {
                 .collect(Collectors.toList());
         LOGGER.info("Boards have been filtered. Current list size: " + filteredBoards.size());
         return trelloMapper.mapToBoardsDto(filteredBoards);
+    }
+
+    public CreatedTrelloCardDto createCard(final TrelloCardDto trelloCardDto) {
+        TrelloCard trelloCard = trelloMapper.mapToCard(trelloCardDto);
+
+        if(trelloCard.getName().contains("test")) {
+            LOGGER.info("There is a card containing \"test\" in its name");
+        } else {
+            LOGGER.info("There is no card containing \"test\" in its name");
+        }
+
+        return trelloService.createTrelloCard(trelloMapper.mapToCardDto(trelloCard));
     }
 
 }
