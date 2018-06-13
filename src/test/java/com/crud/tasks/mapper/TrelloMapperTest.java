@@ -2,8 +2,6 @@ package com.crud.tasks.mapper;
 
 import com.crud.tasks.domain.*;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TrelloMapperTest {
 
     @Autowired
