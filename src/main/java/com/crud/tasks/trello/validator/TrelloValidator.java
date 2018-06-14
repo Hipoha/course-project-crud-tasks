@@ -25,10 +25,10 @@ public class TrelloValidator {
 
     public void validateCard(final TrelloCard trelloCard) {
 
-        if(trelloCard.getName().contains("test")) {
-            LOGGER.info("There is a card containing \"test\" in its name");
+        if(trelloCard.getName().toLowerCase().contains("test")) {
+            LOGGER.info("There is a card containing \"test\" (any-case) in its name");
         } else {
-            LOGGER.info("There is no card containing \"test\" in its name");
+            LOGGER.info("There is no card containing \"test\" (any-case) in its name");
         }
     }
 }
