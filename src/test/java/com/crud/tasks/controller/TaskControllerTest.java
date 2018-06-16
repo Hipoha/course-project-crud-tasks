@@ -16,11 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -53,6 +55,22 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("Test title")))
                 .andExpect(jsonPath("[0].content", is("Test content")));
+    }
+
+    @Test
+    public void shouldFetchTaskById() throws Exception {
+        //Given
+        Task task = new Task(1L, "Test title", "Test content");
+        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
+
+        when(service.getTaskById(anyLong())).thenReturn(Optional.ofNullable(task));
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
+        //When & Then
+        mockMvc.perform(get("/v1/task/getTask?id=1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Test title")))
+                .andExpect(jsonPath("$.content", is("Test content")));
     }
 
 }
