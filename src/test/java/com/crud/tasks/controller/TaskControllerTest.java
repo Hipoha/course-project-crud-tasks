@@ -88,6 +88,18 @@ public class TaskControllerTest {
     }
 
     @Test
+    public void shouldThrowTaskNotFoundException() throws Exception {
+        //Given
+        Task task = new Task(1L, "Test title", "Test content");
+        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
+
+        when(service.getTaskById(anyLong())).thenReturn(Optional.empty());
+        //When & Then
+        mockMvc.perform(get("/v1/task/getTask?id=1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(404));
+    }
+
+    @Test
     public void shouldUpdateTask() throws Exception {
         //Given
         TaskDto taskDto = new TaskDto(1L, "Updated title", "Updated content");
