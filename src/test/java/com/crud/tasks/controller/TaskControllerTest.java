@@ -44,6 +44,18 @@ public class TaskControllerTest {
     private TaskMapper taskMapper;
 
     @Test
+    public void shouldFetchEmptyTaskList() throws Exception {
+        //Given
+        List<TaskDto> taskDtoList = new ArrayList<>();
+
+        when(taskMapper.mapToTaskDtoList(service.getAllTasks())).thenReturn(taskDtoList);
+        //When & Then
+        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
     public void shouldFetchTaskList() throws Exception {
         //Given
         TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
