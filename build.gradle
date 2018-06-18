@@ -37,6 +37,8 @@ dependencies {
 //    compile('org.postgresql:postgresql')
 	compile('org.springframework.boot:spring-boot-starter-mail:1.5.10.RELEASE')
 
+	compile('com.google.code.gson:gson:2.8.5')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 //    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
