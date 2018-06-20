@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.M7'
+		springBootVersion = '2.0.0.M6'
 	}
 	repositories {
 		mavenCentral()
@@ -36,6 +36,8 @@ dependencies {
     compile('mysql:mysql-connector-java')
 //    compile('org.postgresql:postgresql')
 	compile('org.springframework.boot:spring-boot-starter-mail:1.5.10.RELEASE')
+
+	compile('org.springframework.boot:spring-boot-starter-actuator')
 
 	compile('com.google.code.gson:gson:2.8.5')
 
