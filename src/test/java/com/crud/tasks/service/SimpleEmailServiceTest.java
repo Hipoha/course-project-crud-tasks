@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import static org.junit.Assert.*;
@@ -28,19 +30,24 @@ public class SimpleEmailServiceTest {
         // Given
         Mail mail = new Mail("test@test.com", "test2@test.com", "Test", "Test Message");
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(mail.getMailTo());
-        if (!("".equals(mail.getCcTo())) && mail.getCcTo()!=null) {
-            mailMessage.setCc(mail.getCcTo());
-        }
-        mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mail.getMessage());
+        MimeMessagePreparator mimeMessage = message -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message);
+            messageHelper.setTo(mail.getMailTo());
+            if (!("".equals(mail.getCcTo())) && mail.getCcTo()!=null) {
+                messageHelper.setCc(mail.getCcTo());
+            }
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mail.getMessage());
+        };
 
         // When
-        simpleEmailService.send(mail);
+        try {
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         // Then
-        verify(javaMailSender, times(1)).send(mailMessage);
+        verify(javaMailSender, times(1)).send(mimeMessage);
     }
-
 }
